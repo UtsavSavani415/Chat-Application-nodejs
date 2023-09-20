@@ -12,20 +12,22 @@ app.use(cors());
 
 // CRUD
 
-app.post("/", (req, res) => {});
-
-app.listen(port, (req, res) => {
-  console.log("Server running on port", port);
+app.get("/", (req, res) => {
+  res.send("welcome chat api");
 });
 
 mongoose
   .connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  }) 
+  })
   .then(() => {
     console.log("Mongo db connection established");
   })
   .catch((error) => {
-    console.log("MongoDB connection failed: ", error);
+    console.log("MongoDB connection failed: ", error.message);
   });
+
+app.listen(port, (req, res) => {
+  console.log("Server running on port", port);
+});
