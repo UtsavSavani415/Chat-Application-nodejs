@@ -68,7 +68,7 @@ const loginUser = async (req, res) => {
     res.status(200).json({ _id: user._id, email, token });
   } catch (error) {
     console.log("Error while  logging in", error);
-    res.status(500).json(error);
+    // res.status(500).json(error);
   }
 };
 
@@ -78,21 +78,22 @@ const findUser = async (req, res) => {
   try {
     const user = await userModel.findById(userId);
 
-    res.status(100).json(user);
+    res.status(200).json(user);
   } catch (error) {
     console.log("Error while finding user", error);
-    res.status(500).json(error);
+    // res.status(500).json(error);
   }
 };
 
 const getUsers = async (req, res) => {
+  console.log("/ path log");
   try {
     const users = await userModel.find();
 
-    res.status(100).json(users);
+    res.status(200).json(users);
   } catch (error) {
     console.log("Error while getting all user", error);
-    res.status(500).json(error);
+    // res.status(500).json(error);
   }
 };
 
