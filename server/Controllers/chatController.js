@@ -2,10 +2,6 @@ const chatModel = require("../Models/chatModel");
 
 // create chat
 
-// get user chat
-
-//find chat
-
 const createChat = async (req, res) => {
   const { firstId, secondId } = req.body;
 
@@ -21,8 +17,49 @@ const createChat = async (req, res) => {
     const newChat = new chatModel({
       members: [firstId, secondId],
     });
+
+    const response = await newChat.save();
+    console.log("new chat created", response);
+
+    res.status(200).json(response);
   } catch (error) {
     console.log("error while creating chat", error);
     res.status(500).json(error);
   }
 };
+
+// find user chat
+
+const findUserChat = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const chats = await chatModel.find({
+      members: { $in: [userId] },
+    });
+
+    res.status(200).json(chats);
+  } catch (error) {
+    console.log("error while finding chat", error);
+    res.status(500).json(error);
+  }
+};
+
+//find chat
+
+const findChat = async (req, res) => {
+  const { firstId, secondId } = req.params;
+
+  try {
+    const chat = await chatModel.find({
+      members: { $all: [firstId, secondId] },
+    });
+
+    res.status(200).json(chat);
+  } catch (error) {
+    console.log("error while finding chat", error);
+    res.status(500).json(error);
+  }
+};
+
+module.exports = { createChat, findUserChat, findChat };
