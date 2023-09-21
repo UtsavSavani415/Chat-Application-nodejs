@@ -2,7 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
-const userRouter = require("./Routes/userRoute");
+const userRoute = require("./Routes/userRoute");
+const chatRoute = require("./Routes/chatRoute");
 require("dotenv").config();
 
 const port = process.env.PORT || 5000;
@@ -11,9 +12,10 @@ const uri = process.env.ATLAS_URI;
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/users", userRouter);
-// CRUD
+app.use("/api/users", userRoute);
+app.use("/api/chats", chatRoute);
 
+// CRUD
 app.get("/", (req, res) => {
   res.send("welcome chat api");
 });
