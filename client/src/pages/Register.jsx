@@ -1,0 +1,57 @@
+import { Alert, Button, Form, Row, Col, Stack } from "react-bootstrap";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
+function Register() {
+  const { registerinfo, updateRegisterInfo } = useContext(AuthContext);
+
+  return (
+    <>
+      <Form>
+        <Row style={{ height: "100vh", justifyContent: "center" }}>
+          <Col xs={6}>
+            <Stack gap={3}>
+              <h2>Register</h2>
+              <Form.Control
+                type="text"
+                placeholder="Name"
+                onChange={(e) => {
+                  updateRegisterInfo({ ...registerinfo, name: e.target.value });
+                }}
+              />
+              <Form.Control
+                type="email"
+                placeholder="Email"
+                onChange={(e) => {
+                  updateRegisterInfo({
+                    ...registerinfo,
+                    email: e.target.value,
+                  });
+                }}
+              />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                onChange={(e) => {
+                  updateRegisterInfo({
+                    ...registerinfo,
+                    password: e.target.value,
+                  });
+                }}
+              />
+              <Button variant="primary" type="submit">
+                Register
+              </Button>
+
+              <Alert variant="danger">
+                <p>error occured</p>
+              </Alert>
+            </Stack>
+          </Col>
+        </Row>
+      </Form>
+    </>
+  );
+}
+
+export default Register;
