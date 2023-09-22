@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { createContext, useCallback, useState, useEffect } from "react";
-import { baseurl, postRequest } from "../src/utils/service";
-import { jsx } from "@emotion/react";
+import { baseurl, postRequest } from "../utils/service";
 
 export const AuthContext = createContext();
 
