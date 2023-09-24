@@ -6,7 +6,7 @@ export const useFetchRecipientUser = (chat, user) => {
   const [error, setError] = useState(null);
 
   const recipientId = chat?.members.find((id) => {
-    return id !== user?.id;
+    return id !== user?._id;
   });
 
   useEffect(() => {

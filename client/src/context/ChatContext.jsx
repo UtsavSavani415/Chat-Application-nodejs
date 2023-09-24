@@ -17,15 +17,15 @@ export const ChatContextProvider = ({ children, user }) => {
       if (response.error) {
         return console.log("error fetching users", response);
       }
-
+      console.log("userchats", userChats);
       const pChats = response.filter((u) => {
         let isChatCreated = false;
-        if (user?._id === u?._id) {
+        if (user?._id === u._id) {
           return false;
         }
 
         if (userChats) {
-        userChats?.some((chat) => {
+          isChatCreated = userChats?.some((chat) => {
             return chat.members[0] === u._id || chat.members[1] === u._id;
           });
         }
