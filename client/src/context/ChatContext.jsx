@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import { baseurl, getRequest, postRequest } from "../utils/service";
 
 export const ChatContext = createContext();
@@ -18,19 +18,25 @@ export const ChatContextProvider = ({ children, user }) => {
         return console.log("error fetching users", response);
       }
 
-      const pChats = response.find((u) => {
+      const pChats = response.filter((u) => {
         let isChatCreated = false;
-        if (user._id === u._id) {
+        if (user?._id === u?._id) {
           return false;
         }
 
         if (userChats) {
+        userChats?.some((chat) => {
+            return chat.members[0] === u._id || chat.members[1] === u._id;
+          });
         }
+
+        return !isChatCreated;
       });
+      setPotentialChats(pChats);
     };
 
     getUsers();
-  }, []);
+  }, [userChats]);
 
   useEffect(() => {
     const getUserChats = async () => {
@@ -52,9 +58,28 @@ export const ChatContextProvider = ({ children, user }) => {
     getUserChats();
   }, [user]);
 
+  const createChat = useCallback(async (firstId, secondId) => {
+    const response = await postRequest(
+      `${baseurl}/chats/`,
+      JSON.stringify({ firstId, secondId })
+    );
+
+    if (response.error) {
+      return console.log("error while creating chat");
+    }
+
+    setUserChats((prev) => [...prev, response]);
+  }, []);
+
   return (
     <ChatContext.Provider
-      value={{ userChats, userChatsError, isUserChatsLoading }}
+      value={{
+        userChats,
+        userChatsError,
+        isUserChatsLoading,
+        potentialChats,
+        createChat,
+      }}
     >
       {children}
     </ChatContext.Provider>

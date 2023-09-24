@@ -1,4 +1,3 @@
-import React from "react";
 import { useFetchRecipientUser } from "../../hooks/useFetchRecipient";
 import { Stack } from "react-bootstrap";
 import avatar from "../../assets/avatar.png";
@@ -6,7 +5,8 @@ import avatar from "../../assets/avatar.png";
 const UserChat = ({ chat, user }) => {
   const { recipientUser } = useFetchRecipientUser(chat, user);
 
-  console.log("recipientUser", recipientUser);
+  // console.log("recipientUser", recipientUser);
+
   return (
     <Stack
       direction="horizontal"
@@ -16,7 +16,7 @@ const UserChat = ({ chat, user }) => {
     >
       <div className="d-flex">
         <div className="me-2">
-          <img src={avatar} alt="avatar" height={"70px"}/>
+          <img src={avatar} alt="avatar" height={"70px"} />
         </div>
         <div className="text-content pt-2">
           <div className="name">{recipientUser?.name}</div>
