@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { createContext, useState, useEffect, useCallback } from "react";
 import { baseurl, getRequest, postRequest } from "../utils/service";
+import { io } from "socket.io-client";
 
 export const ChatContext = createContext();
 
@@ -15,8 +16,55 @@ export const ChatContextProvider = ({ children, user }) => {
   const [messagesError, setMessagesError] = useState(null);
   const [sendTextMessageError, setSendTextMessageError] = useState(null);
   const [newMessage, setNewMessage] = useState(null);
+  const [socket, setSocket] = useState(null);
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
-  console.log("messages", messages);
+  console.log("onmline users", onlineUsers);
+
+  // initial socket (setup)
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+    const newSocket = io("http://localhost:3000");
+    setSocket(newSocket);
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, [user]);
+
+  // add online users
+
+  useEffect(() => {
+    if (socket === null) {
+      return;
+    }
+    socket.emit("addNewUser", user?._id);
+    socket.on("getOnlineUsers", (res) => {
+      setOnlineUsers(res);
+    });
+
+    return () => {
+      socket.off("getOnlineUsers");
+    };
+  }, [socket]);
+
+  //send message to socket
+
+  useEffect(() => {
+    if (socket === null) {
+      return;
+    }
+
+    const recipientId = userChats?.members.find((id) => {
+      return id !== user?._id;
+    });
+
+    socket.emit("sendMessage", { ...newMessage, recipientId });
+  }, [newMessage]);
+
   // useEffect to get users
   useEffect(() => {
     const getUsers = async () => {
@@ -147,6 +195,7 @@ export const ChatContextProvider = ({ children, user }) => {
         isMessagesLoading,
         messagesError,
         sendTextMessage,
+        onlineUsers,
       }}
     >
       {children}

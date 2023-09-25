@@ -19,7 +19,6 @@ const createChat = async (req, res) => {
     });
 
     const response = await newChat.save();
-    console.log("new chat created", response);
 
     res.status(200).json(response);
   } catch (error) {
