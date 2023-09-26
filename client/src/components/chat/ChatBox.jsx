@@ -20,7 +20,7 @@ function ChatBox(props) {
   const { recipientUser } = useFetchRecipientUser(currentChat, user);
   const [textMessage, setTextMessage] = useState("");
 
-  console.log("text", textMessage);
+  // console.log("text", textMessage);
 
   if (!recipientUser) {
     return (
@@ -60,6 +60,9 @@ function ChatBox(props) {
             );
           })}
       </Stack>
+
+      {/* Input box */}
+
       <Stack direction="horizontal" gap={3} className="chat-input flex-grow-0">
         <InputEmoji
           value={textMessage}
