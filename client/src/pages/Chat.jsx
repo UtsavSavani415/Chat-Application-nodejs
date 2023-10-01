@@ -11,7 +11,6 @@ function Chat(props) {
   const { userChats, isUserChatsLoading, updateCurrentChat } =
     useContext(ChatContext);
 
-  // console.log("userchat data", userChats, user);
   return (
     <>
       <Container>

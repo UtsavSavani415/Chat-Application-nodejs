@@ -43,7 +43,6 @@ export const AuthContextProvider = ({ children }) => {
         JSON.stringify(registerinfo)
       );
       setIsRegisterLoading(false);
-      console.log("registeer", response);
       if (response.error) {
         return setRegisterError(response);
       }
@@ -70,7 +69,6 @@ export const AuthContextProvider = ({ children }) => {
       );
 
       setIsLoginLoading(null);
-      console.log("login respoonse", response);
       if (response.error) {
         return setLoginError(response);
       }

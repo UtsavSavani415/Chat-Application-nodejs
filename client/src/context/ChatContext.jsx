@@ -21,8 +21,6 @@ export const ChatContextProvider = ({ children, user }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [notifications, setNotifications] = useState([]);
 
-  console.log("notifdication", notifications);
-
   // initial socket (setup)
 
   useEffect(() => {
@@ -62,8 +60,6 @@ export const ChatContextProvider = ({ children, user }) => {
     const recipientId = currentChat?.members?.find((id) => {
       return id !== user?._id;
     });
-
-    console.log("recipient id", recipientId, user);
 
     socket.emit("sendMessage", { ...newMessage, recipientId });
   }, [newMessage]);
@@ -107,7 +103,6 @@ export const ChatContextProvider = ({ children, user }) => {
       if (response.error) {
         return console.log("error fetching users", response);
       }
-      console.log("userchats", userChats);
       const pChats = response.filter((u) => {
         let isChatCreated = false;
         if (user?._id === u._id) {
@@ -224,7 +219,6 @@ export const ChatContextProvider = ({ children, user }) => {
   }, []);
 
   const markNotificationAsRead = useCallback((n, userChats, user) => {
-    console.log("mark as read nti", n);
     // find chat to open
 
     const desiredChat = userChats.find((chat) => {

@@ -7,8 +7,6 @@ const io = new Server({
 let onlineUsers = [];
 
 io.on("connection", (socket) => {
-  console.log("new connection of socket", socket.id);
-
   //listen to a connection
 
   socket.on("addNewUser", (userId) => {
@@ -41,8 +39,6 @@ io.on("connection", (socket) => {
     onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
     io.emit("getOnlineUsers", onlineUsers);
   });
-
-  console.log("online users", onlineUsers);
 });
 
 io.listen(3000);
