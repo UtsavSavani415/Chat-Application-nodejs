@@ -72,7 +72,7 @@ const UserChat = ({ chat, user }) => {
             : ""}
         </div>
         <span className={isOnline ? "user-online" : ""}></span>
-      </div>
+      </div> 
     </Stack>
   );
 };
