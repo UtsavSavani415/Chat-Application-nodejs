@@ -27,7 +27,8 @@ export const ChatContextProvider = ({ children, user }) => {
     if (!user) {
       return;
     }
-    const newSocket = io("http://localhost:3000");
+    // const newSocket = io("http://localhost:3000");
+    const newSocket = io("https://chat-app-socket-padm.onrender.com");
     setSocket(newSocket);
 
     return () => {
