@@ -5,8 +5,8 @@ import Chat from "./pages/Chat";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
+import NavBar from "./components/NavBar"
 import { Container } from "react-bootstrap";
-import NavBar from "./components/Navbar";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { ChatContextProvider } from "./context/ChatContext";
