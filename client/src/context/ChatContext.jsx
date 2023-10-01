@@ -148,7 +148,7 @@ export const ChatContextProvider = ({ children, user }) => {
       }
     };
     getUserChats();
-  }, [user]);
+  }, [user, notifications]);
 
   //get message use effect
   useEffect(() => {
